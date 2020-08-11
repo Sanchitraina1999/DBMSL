@@ -27,7 +27,7 @@ CREATE TABLE table_name(
 DROP TABLE table_name;
 
 # rename
-ALTER TABLE table_name RENAME new_table_name
+ALTER TABLE table_name RENAME to new_table_name
 
 # list all
 SHOW TABLES;
