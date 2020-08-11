@@ -1,108 +1,266 @@
-sanchit199@imsotired:~/Desktop/TE/DBMSL$ sudo mysql
-[sudo] password for sanchit199: 
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 33
-Server version: 8.0.21-0ubuntu0.20.04.3 (Ubuntu)
+﻿## DDL Statements
+#### Databases
+```sql
+# create
+CREATE DATABASE database_name;
 
-Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+# switch
+USE database_name;
 
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
+# delete
+DROP DATABASE database_name;
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+# list all
+SHOW DATABASES;
 
-mysql> CREATE DATABASE `31155`;
-Query OK, 1 row affected (0.19 sec)
+```
 
-mysql> USE `31155`;
-Database changed
-mysql> CREATE TABLE Departments(
-    ->     dept_id int NOT NULL,
-    ->     dept_name varchar(16) NOT NULL,
-    ->     PRIMARY KEY(dept_id)
-    -> );
-Query OK, 0 rows affected (0.66 sec)
+#### Tables
+```sql
+# create
+CREATE TABLE table_name(
+	column_name datatype,
+	column_name datatype
+);
 
-mysql> CREATE TABLE Professors(
-    ->     prof_id int NOT NULL,
-    ->     prof_fname varchar(16) NOT NULL,
-    ->     prof_lname varchar(16) NOT NULL,
-    ->     dept_id int NOT NULL,
-    ->     designation varchar(16) NOT NULL,
-    ->     salary int NOT NULL,
-    ->     doj DATE NOT NULL,
-    ->     email varchar(32) NOT NULL,
-    ->     phone varchar(10) NOT NULL,
-    ->     city varchar(16) NOT NULL,
-    ->     PRIMARY KEY (prof_id),
-    ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE
-    -> );
-Query OK, 0 rows affected (1.62 sec)
+# delete
+DROP TABLE table_name;
 
-mysql> CREATE TABLE works(
-    ->     prof_id int NOT NULL,
-    ->     dept_id int NOT NULL,
-    ->     duration int NOT NULL,
-    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE
-    -> );
-Query OK, 0 rows affected (0.67 sec)
+# rename
+ALTER TABLE table_name RENAME new_table_name
 
-mysql> CREATE TABLE Shift(
-    ->     prof_id int NOT NULL,
-    ->     shift varchar(16) NOT NULL,
-    ->     working_hours varchar(16) NOT NULL,
-    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE,
-    ->     PRIMARY KEY (prof_id, shift,working_hours)
-    -> );
-Query OK, 0 rows affected (0.59 sec)
+# list all
+SHOW TABLES;
 
-mysql> desc Departments;
-+-----------+-------------+------+-----+---------+-------+
-| Field     | Type        | Null | Key | Default | Extra |
-+-----------+-------------+------+-----+---------+-------+
-| dept_id   | int         | NO   | PRI | NULL    |       |
-| dept_name | varchar(16) | NO   |     | NULL    |       |
-+-----------+-------------+------+-----+---------+-------+
-2 rows in set (0.20 sec)
+# describe
+DESCRIBE table_name;
 
-mysql> desc Professors;
-+-------------+-------------+------+-----+---------+-------+
-| Field       | Type        | Null | Key | Default | Extra |
-+-------------+-------------+------+-----+---------+-------+
-| prof_id     | int         | NO   | PRI | NULL    |       |
-| prof_fname  | varchar(16) | NO   |     | NULL    |       |
-| prof_lname  | varchar(16) | NO   |     | NULL    |       |
-| dept_id     | int         | NO   | MUL | NULL    |       |
-| designation | varchar(16) | NO   |     | NULL    |       |
-| salary      | int         | NO   |     | NULL    |       |
-| doj         | date        | NO   |     | NULL    |       |
-| email       | varchar(32) | NO   |     | NULL    |       |
-| phone       | varchar(10) | NO   |     | NULL    |       |
-| city        | varchar(16) | NO   |     | NULL    |       |
-+-------------+-------------+------+-----+---------+-------+
-10 rows in set (0.01 sec)
+```
 
-mysql> desc works;
-+----------+------+------+-----+---------+-------+
-| Field    | Type | Null | Key | Default | Extra |
-+----------+------+------+-----+---------+-------+
-| prof_id  | int  | NO   | MUL | NULL    |       |
-| dept_id  | int  | NO   |     | NULL    |       |
-| duration | int  | NO   |     | NULL    |       |
-+----------+------+------+-----+---------+-------+
-3 rows in set (0.01 sec)
+#### Views
+>A view is a virtual table based on the result-set of an SQL statement,  
+>The fields in a view are fields from one or more real tables in the database.
+```sql
+# create
+CREATE VIEW view_name AS
+	SELECT column_name(s) FROM table_name
+		WHERE <condition>;
 
-mysql> 
-mysql> desc Shift;
-+---------------+-------------+------+-----+---------+-------+
-| Field         | Type        | Null | Key | Default | Extra |
-+---------------+-------------+------+-----+---------+-------+
-| prof_id       | int         | NO   | PRI | NULL    |       |
-| shift         | varchar(16) | NO   | PRI | NULL    |       |
-| working_hours | varchar(16) | NO   | PRI | NULL    |       |
-+---------------+-------------+------+-----+---------+-------+
-3 rows in set (0.00 sec)
+# delete 
+DROP VIEW view_name;
 
-mysql> 
+# alter
+ALTER VIEW view_name AS
+	SELECT column_name(s) FROM table_name
+		WHERE <condition>;
 
+# describe
+DESCRIBE view_name;
+
+```
+
+#### Columns
+```sql
+# add
+ALTER TABLE table_name ADD column_name datatype;
+
+# rename
+ALTER TABLE table_name RENAME COLUMN old_name TO new_name;
+
+# delete
+ALTER TABLE table_name DROP column_name;
+
+# modify datatype, constraints
+ALTER TABLE table_name MODIFY column_name datatype;
+
+```
+
+#### Primary Key
+```sql
+# alongwith column creation
+CREATE TABLE table_name(
+	column_name1 datatype PRIMARY KEY,
+	column_name2 datatype,
+	column_name3 datatype
+);
+
+# within create table
+CREATE TABLE table_name(
+	column_name1 datatype NOT NULL,
+	column_name2 datatype,
+	column_name3 datatype,
+	PRIMARY KEY(column_name1)
+);
+
+# composite primary key
+CREATE TABLE table_name(
+	column_name1 datatype NOT NULL,
+	column_name2 datatype NOT NULL,
+	column_name3 datatype,
+	PRIMARY KEY(column_name1,column_name2)
+);
+
+# with alter table
+CREATE TABLE table_name(
+	column_name1 datatype NOT NULL,
+	column_name2 datatype,
+	column_name3 datatype
+);
+ALTER TABLE table_name ADD PRIMARY KEY(column_name1);
+
+# composite primary key, with alter table
+CREATE TABLE table_name(
+	column_name1 datatype NOT NULL,
+	column_name2 datatype NOT NULL,
+	column_name3 datatype
+);
+ALTER TABLE table_name ADD PRIMARY KEY(column_name1,column_name2);
+
+# delete
+ALTER TABLE table_name DROP PRIMARY KEY;
+
+```
+
+#### Foreign Key
+```sql
+CREATE TABLE table_primary(
+	column_nameA datatype PRIMARY KEY,
+	column_nameB datatype,
+	column_nameC datatype,
+	PRIMARY KEY (column_nameA)
+);
+```
+<hr></hr>
+
+```sql
+# within create table
+CREATE TABLE table_secondary(
+	column_nameP datatype NOT NULL,
+	column_nameQ datatype,
+	column_nameA datatype,
+	PRIMARY KEY (column_nameP),
+	CONSTRAINT constraint_name
+		FOREIGN KEY (column_nameA) REFERENCES table_primary(column_nameA)
+);
+
+# cascade
+CREATE TABLE table_secondary(
+	column_nameP datatype NOT NULL,
+	column_nameQ datatype,
+	column_nameA datatype,
+	PRIMARY KEY (column_nameP),
+	CONSTRAINT constraint_name
+		FOREIGN KEY (column_nameA) REFERENCES table_primary(column_nameA)
+			ON DELETE CASCADE
+);
+
+# with alter table
+CREATE TABLE table_secondary(
+	column_nameP datatype NOT NULL,
+	column_nameQ datatype,
+	column_nameA datatype,
+	PRIMARY KEY (column_nameP)
+);
+ALTER TABLE table_secondary ADD CONSTRAINT constraint_name
+	FOREIGN KEY(column_nameA) REFERENCES table_primary(column_nameA);
+
+# cascade, with alter table
+CREATE TABLE table_secondary(
+	column_nameP datatype NOT NULL,
+	column_nameQ datatype,
+	column_nameA datatype,
+	PRIMARY KEY (column_nameP)
+);
+ALTER TABLE table_secondary ADD CONSTRAINT constraint_name
+	FOREIGN KEY(column_nameA) REFERENCES table_primary(column_nameA)
+		ON DELETE CASCADE;
+
+# delete
+ALTER TABLE table_secondary DROP FOREIGN KEY constraint_name;
+```
+
+#### Check
+```sql
+# alongwith column creation
+CREATE TABLE table_name(
+	column_name1 datatype,
+	column_name2 datatype CHECK (<column_name3 condition>),
+	column_name3 datatype 
+);
+
+# within create table
+CREATE TABLE table_name(
+	column_name1 datatype,
+	column_name2 datatype,
+	column_name3 datatype,
+	CONSTRAINT constraint_name
+		CHECK (<column_name(s) condition>)
+);
+
+# with alter table
+CREATE TABLE table_name(
+	column_name1 datatype,
+	column_name2 datatype,
+	column_name3 datatype
+);
+ALTER TABLE table_name ADD CONSTRAINT constraint_name 
+	CHECK (<column_name(s) condition>);
+
+# delete
+ALTER TABLE table_name DROP CHECK constraint_name;
+# or
+ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+
+```
+
+#### Unique
+```sql
+# alongwith column creation
+CREATE TABLE table_name(
+	column_name1 datatype,
+	column_name2 datatype UNIQUE,
+	column_name3 datatype 
+);
+
+# within create table
+CREATE TABLE table_name(
+	column_name1 datatype,
+	column_name2 datatype,
+	column_name3 datatype,
+	UNIQUE(column_name2)
+);
+
+# with alter table
+CREATE TABLE table_name(
+	column_name1 datatype,
+	column_name2 datatype,
+	column_name3 datatype 
+);
+ALTER TABLE table_name ADD UNIQUE(column_name2);
+
+# delete 
+ALTER TABLE table_name DROP INDEX column_name;
+
+```
+<br></br>
+## DML Statements
+#### Insert
+```sql
+# into each column
+INSERT INTO table_name
+	VALUES (column1_value,column2_value,...,colunmN_value);
+
+# into specified column
+INSERT INTO table_name (columnX,columnY,columnZ)
+	VALUES (columnX_value,columnY_value,columnZ_value);
+
+# insert with select
+INSERT INTO table2 (columnX,columnY,columnZ)
+	SELECT columnP,columnQ,columnR FROM table1
+		WHERE (<condition(s)>);
+
+# copying entire table1
+INSERT INTO table1_copy
+	SELECT * FROM table1;
+	
+```
