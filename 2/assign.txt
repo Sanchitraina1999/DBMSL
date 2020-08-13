@@ -1,7 +1,7 @@
-sanchit199@imsotired:~/Desktop/TE/DBMSL$ sudo mysql
+sanchit199@imsotired:~$ sudo mysql
 [sudo] password for sanchit199: 
 Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 33
+Your MySQL connection id is 11
 Server version: 8.0.21-0ubuntu0.20.04.3 (Ubuntu)
 
 Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
@@ -13,7 +13,7 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql> CREATE DATABASE `31155`;
-Query OK, 1 row affected (0.19 sec)
+Query OK, 1 row affected (0.16 sec)
 
 mysql> USE `31155`;
 Database changed
@@ -22,8 +22,10 @@ mysql> CREATE TABLE Departments(
     ->     dept_name varchar(16) NOT NULL,
     ->     PRIMARY KEY(dept_id)
     -> );
-Query OK, 0 rows affected (0.66 sec)
 
+Query OK, 0 rows affected (1.04 sec)
+
+mysql> 
 mysql> CREATE TABLE Professors(
     ->     prof_id int NOT NULL,
     ->     prof_fname varchar(16) NOT NULL,
@@ -36,26 +38,26 @@ mysql> CREATE TABLE Professors(
     ->     phone varchar(10) NOT NULL,
     ->     city varchar(16) NOT NULL,
     ->     PRIMARY KEY (prof_id),
-    ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE
+    ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE
     -> );
-Query OK, 0 rows affected (1.62 sec)
+Query OK, 0 rows affected (1.73 sec)
 
 mysql> CREATE TABLE works(
     ->     prof_id int NOT NULL,
     ->     dept_id int NOT NULL,
     ->     duration int NOT NULL,
-    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE
+    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE
     -> );
-Query OK, 0 rows affected (0.67 sec)
+Query OK, 0 rows affected (1.50 sec)
 
 mysql> CREATE TABLE Shift(
     ->     prof_id int NOT NULL,
     ->     shift varchar(16) NOT NULL,
     ->     working_hours varchar(16) NOT NULL,
-    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE,
+    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE,
     ->     PRIMARY KEY (prof_id, shift,working_hours)
     -> );
-Query OK, 0 rows affected (0.59 sec)
+Query OK, 0 rows affected (0.82 sec)
 
 mysql> desc Departments;
 +-----------+-------------+------+-----+---------+-------+
@@ -64,7 +66,7 @@ mysql> desc Departments;
 | dept_id   | int         | NO   | PRI | NULL    |       |
 | dept_name | varchar(16) | NO   |     | NULL    |       |
 +-----------+-------------+------+-----+---------+-------+
-2 rows in set (0.20 sec)
+2 rows in set (0.22 sec)
 
 mysql> desc Professors;
 +-------------+-------------+------+-----+---------+-------+
@@ -81,7 +83,7 @@ mysql> desc Professors;
 | phone       | varchar(10) | NO   |     | NULL    |       |
 | city        | varchar(16) | NO   |     | NULL    |       |
 +-------------+-------------+------+-----+---------+-------+
-10 rows in set (0.01 sec)
+10 rows in set (0.00 sec)
 
 mysql> desc works;
 +----------+------+------+-----+---------+-------+
@@ -91,9 +93,8 @@ mysql> desc works;
 | dept_id  | int  | NO   |     | NULL    |       |
 | duration | int  | NO   |     | NULL    |       |
 +----------+------+------+-----+---------+-------+
-3 rows in set (0.01 sec)
+3 rows in set (0.00 sec)
 
-mysql> 
 mysql> desc Shift;
 +---------------+-------------+------+-----+---------+-------+
 | Field         | Type        | Null | Key | Default | Extra |
@@ -102,7 +103,4 @@ mysql> desc Shift;
 | shift         | varchar(16) | NO   | PRI | NULL    |       |
 | working_hours | varchar(16) | NO   | PRI | NULL    |       |
 +---------------+-------------+------+-----+---------+-------+
-3 rows in set (0.00 sec)
-
-mysql> 
-
+3 rows in set (0.01 sec)

@@ -20,21 +20,21 @@ CREATE TABLE Professors(
     phone varchar(10) NOT NULL,
     city varchar(16) NOT NULL,
     PRIMARY KEY (prof_id),
-    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE works(
     prof_id int NOT NULL,
     dept_id int NOT NULL,
     duration int NOT NULL,
-    FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE
+    FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Shift(
     prof_id int NOT NULL,
     shift varchar(16) NOT NULL,
     working_hours varchar(16) NOT NULL,
-    FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE,
+    FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (prof_id, shift,working_hours)
 );
 
