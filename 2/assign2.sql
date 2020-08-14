@@ -76,7 +76,7 @@ from Professors;
 INSERT INTO works
     (prof_id, dept_id, duration)
 VALUES
-    (1,1,2);
+    (1, 1, 2);
 
 select *
 from works;
@@ -84,9 +84,10 @@ from works;
 INSERT INTO Shift
     (prof_id,shift,working_hours)
 VALUES
-    (1,'Morning',8);
+    (1, 'Morning', 8);
 
-select * from Shift;
+select *
+from Shift;
 
 -- Whenever we delete or update any key that is foreign key
 -- in another table, it is also updated/deleted in the child tables
