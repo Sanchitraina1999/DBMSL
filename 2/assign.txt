@@ -1,7 +1,7 @@
 sanchit199@imsotired:~$ sudo mysql
 [sudo] password for sanchit199: 
 Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 11
+Your MySQL connection id is 9
 Server version: 8.0.21-0ubuntu0.20.04.3 (Ubuntu)
 
 Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
@@ -13,20 +13,20 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql> CREATE DATABASE `31155`;
-Query OK, 1 row affected (0.16 sec)
+Query OK, 1 row affected (0.25 sec)
 
 mysql> USE `31155`;
 Database changed
-mysql> CREATE TABLE Departments(
+mysql> CREATE TABLE Departments
+    -> (
     ->     dept_id int NOT NULL,
     ->     dept_name varchar(16) NOT NULL,
     ->     PRIMARY KEY(dept_id)
     -> );
+Query OK, 0 rows affected (0.66 sec)
 
-Query OK, 0 rows affected (1.04 sec)
-
-mysql> 
-mysql> CREATE TABLE Professors(
+mysql> CREATE TABLE Professors
+    -> (
     ->     prof_id int NOT NULL,
     ->     prof_fname varchar(16) NOT NULL,
     ->     prof_lname varchar(16) NOT NULL,
@@ -40,24 +40,28 @@ mysql> CREATE TABLE Professors(
     ->     PRIMARY KEY (prof_id),
     ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE
     -> );
-Query OK, 0 rows affected (1.73 sec)
+Query OK, 0 rows affected (1.48 sec)
 
-mysql> CREATE TABLE works(
+mysql> 
+mysql> CREATE TABLE works
+    -> (
     ->     prof_id int NOT NULL,
     ->     dept_id int NOT NULL,
     ->     duration int NOT NULL,
-    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE
+    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE
     -> );
-Query OK, 0 rows affected (1.50 sec)
+Query OK, 0 rows affected (1.76 sec)
 
-mysql> CREATE TABLE Shift(
+mysql> CREATE TABLE Shift
+    -> (
     ->     prof_id int NOT NULL,
     ->     shift varchar(16) NOT NULL,
     ->     working_hours varchar(16) NOT NULL,
     ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE,
     ->     PRIMARY KEY (prof_id, shift,working_hours)
     -> );
-Query OK, 0 rows affected (0.82 sec)
+Query OK, 0 rows affected (0.59 sec)
 
 mysql> desc Departments;
 +-----------+-------------+------+-----+---------+-------+
@@ -66,7 +70,7 @@ mysql> desc Departments;
 | dept_id   | int         | NO   | PRI | NULL    |       |
 | dept_name | varchar(16) | NO   |     | NULL    |       |
 +-----------+-------------+------+-----+---------+-------+
-2 rows in set (0.22 sec)
+2 rows in set (0.01 sec)
 
 mysql> desc Professors;
 +-------------+-------------+------+-----+---------+-------+
@@ -90,7 +94,7 @@ mysql> desc works;
 | Field    | Type | Null | Key | Default | Extra |
 +----------+------+------+-----+---------+-------+
 | prof_id  | int  | NO   | MUL | NULL    |       |
-| dept_id  | int  | NO   |     | NULL    |       |
+| dept_id  | int  | NO   | MUL | NULL    |       |
 | duration | int  | NO   |     | NULL    |       |
 +----------+------+------+-----+---------+-------+
 3 rows in set (0.00 sec)
@@ -103,4 +107,123 @@ mysql> desc Shift;
 | shift         | varchar(16) | NO   | PRI | NULL    |       |
 | working_hours | varchar(16) | NO   | PRI | NULL    |       |
 +---------------+-------------+------+-----+---------+-------+
-3 rows in set (0.01 sec)
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Departments
+    ->     (dept_id, dept_name)
+    -> VALUES
+    ->     (1, 'Computer'),
+    ->     (2, 'IT'),
+    ->     (3, 'EnTC');
+Query OK, 3 rows affected (0.11 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select *
+    -> from Departments;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       1 | Computer  |
+|       2 | IT        |
+|       3 | EnTC      |
++---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Professors
+    ->     (prof_id,prof_fname,prof_lname,dept_id,designation,salary,doj,email,phone,city)
+    -> VALUES
+    ->     (1, 'Binod', 'Sharma', 1, 'Professor', 55000, '1999-12-08', 'sanchit199@gmail.com', 9149659875, 'jammu');
+Query OK, 1 row affected (0.48 sec)
+
+mysql> select *
+    -> from Professors;
++---------+------------+------------+---------+-------------+--------+------------+----------------------+------------+-------+
+| prof_id | prof_fname | prof_lname | dept_id | designation | salary | doj        | email                | phone      | city  |
++---------+------------+------------+---------+-------------+--------+------------+----------------------+------------+-------+
+|       1 | Binod      | Sharma     |       1 | Professor   |  55000 | 1999-12-08 | sanchit199@gmail.com | 9149659875 | jammu |
++---------+------------+------------+---------+-------------+--------+------------+----------------------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO works
+    ->     (prof_id, dept_id, duration)
+    -> VALUES
+    ->     (1, 1, 2);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select *
+    -> from works;
++---------+---------+----------+
+| prof_id | dept_id | duration |
++---------+---------+----------+
+|       1 |       1 |        2 |
++---------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Shift
+    ->     (prof_id,shift,working_hours)
+    -> VALUES
+    ->     (1, 'Morning', 8);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select *
+    -> from Shift;
++---------+---------+---------------+
+| prof_id | shift   | working_hours |
++---------+---------+---------------+
+|       1 | Morning | 8             |
++---------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Departments
+    -> SET dept_id = 11
+    -> WHERE dept_id = 1;
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Departments;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       2 | IT        |
+|       3 | EnTC      |
+|      11 | Computer  |
++---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Professors;
++---------+------------+------------+---------+-------------+--------+------------+----------------------+------------+-------+
+| prof_id | prof_fname | prof_lname | dept_id | designation | salary | doj        | email                | phone      | city  |
++---------+------------+------------+---------+-------------+--------+------------+----------------------+------------+-------+
+|       1 | Binod      | Sharma     |      11 | Professor   |  55000 | 1999-12-08 | sanchit199@gmail.com | 9149659875 | jammu |
++---------+------------+------------+---------+-------------+--------+------------+----------------------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from works;
++---------+---------+----------+
+| prof_id | dept_id | duration |
++---------+---------+----------+
+|       1 |      11 |        2 |
++---------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> DELETE FROM Departments where dept_id = 11;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from Departments;
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+|       2 | IT        |
+|       3 | EnTC      |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Professors;
+Empty set (0.00 sec)
+
+mysql> select * from works;
+Empty set (0.00 sec)
+
+mysql> select * from Shift;
+Empty set (0.00 sec)
+
