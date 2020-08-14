@@ -115,3 +115,7 @@ WHERE dept_id = 1;
 -- Delete from table_name is as:
 
 Delete from table_name where something;
+
+--Example
+
+DELETE FROM Departments where dept_id = 11;
