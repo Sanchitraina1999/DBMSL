@@ -1,0 +1,304 @@
+sanchit199@imsotired:~$ sudo mysql
+[sudo] password for sanchit199: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.21-0ubuntu0.20.04.3 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE `31155`;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> USE `31155`;
+Database changed
+mysql> CREATE TABLE Departments
+    -> (
+    ->     dept_id int NOT NULL,
+    ->     dept_name varchar(16) NOT NULL,
+    ->     PRIMARY KEY(dept_id)
+    -> );
+Query OK, 0 rows affected (1.23 sec)
+
+mysql> CREATE TABLE Professors
+    -> (
+    ->     prof_id int NOT NULL,
+    ->     prof_fname varchar(16) NOT NULL,
+    ->     prof_lname varchar(16) NOT NULL,
+    ->     dept_id int NOT NULL,
+    ->     designation varchar(32) NOT NULL,
+    ->     salary int NOT NULL,
+    ->     doj DATE NOT NULL,
+    ->     email varchar(32) NOT NULL,
+    ->     phone varchar(10) NOT NULL,
+    ->     city varchar(16) NOT NULL,
+    ->     PRIMARY KEY (prof_id),
+    ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (1.37 sec)
+
+mysql> CREATE TABLE works
+    -> (
+    ->     prof_id int NOT NULL,
+    ->     dept_id int NOT NULL,
+    ->     duration int NOT NULL,
+    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    ->     FOREIGN KEY (dept_id) REFERENCES Departments(dept_id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (1.08 sec)
+
+mysql> CREATE TABLE Shift
+    -> (
+    ->     prof_id int NOT NULL,
+    ->     shift varchar(16) NOT NULL,
+    ->     working_hours varchar(16) NOT NULL,
+    ->     FOREIGN KEY (prof_id) REFERENCES Professors(prof_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    ->     PRIMARY KEY (prof_id, shift,working_hours)
+    -> );
+Query OK, 0 rows affected (0.62 sec)
+
+mysql> desc Departments;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_id   | int         | NO   | PRI | NULL    |       |
+| dept_name | varchar(16) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc Professors;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| prof_id     | int         | NO   | PRI | NULL    |       |
+| prof_fname  | varchar(16) | NO   |     | NULL    |       |
+| prof_lname  | varchar(16) | NO   |     | NULL    |       |
+| dept_id     | int         | NO   | MUL | NULL    |       |
+| designation | varchar(32) | NO   |     | NULL    |       |
+| salary      | int         | NO   |     | NULL    |       |
+| doj         | date        | NO   |     | NULL    |       |
+| email       | varchar(32) | NO   |     | NULL    |       |
+| phone       | varchar(10) | NO   |     | NULL    |       |
+| city        | varchar(16) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+mysql> desc works;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| prof_id  | int  | NO   | MUL | NULL    |       |
+| dept_id  | int  | NO   | MUL | NULL    |       |
+| duration | int  | NO   |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc Shift;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| prof_id       | int         | NO   | PRI | NULL    |       |
+| shift         | varchar(16) | NO   | PRI | NULL    |       |
+| working_hours | varchar(16) | NO   | PRI | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Departments
+    ->     (dept_id, dept_name)
+    -> VALUES
+    ->     (1, 'Computer'),
+    ->     (2, 'IT'),
+    ->     (3, 'EnTC');
+Query OK, 3 rows affected (0.11 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Professors
+    ->     (prof_id,prof_fname,prof_lname,dept_id,designation,salary,doj,email,phone,city)
+    -> VALUES
+    ->     (1, 'Binod', 'binod', 1, 'Professor', 25000, '2015-01-01', 'abc@gmail.com', 9149589875, 'jammu'),
+    ->     (2, 'Sahil', 'Singh', 2, 'Assistant Professor', 30000, '2016-01-01', 'xyz@gmail.com', 9149656875, 'pune'),
+    ->     (3, 'Sanchit', 'Raina', 1, 'Professor', 19000, '2016-01-01', 'def@gmail.com', 9149459875, 'mumbai'),
+    ->     (4, 'Rajwinder', 'Singh', 1, 'Professor', 35000, '2015-01-01', 'stu@gmail.com', 9154659875, 'mumbai'),
+    ->     (5, 'Tejas', 'Sarawade', 1, 'Professor', 20000, '2016-01-01', 'jkl@gmail.com', 9144579875, 'pune'),
+    ->     (6, 'Sam', 'Jagdale', 1, 'Assistant Professor', 40000, '1999-12-26', 'ghi@gmail.com', 9145759875, 'pune'),
+    ->     (7, 'Pradyumna', 'Rajje', 1, 'Assistant Professor', 9000, '2016-01-01', 'vwx@gmail.com', 9197569875, 'mumbai'),
+    ->     (8, 'Ayush', 'Raina', 1, 'Professor', 18000, '2015-01-01', 'mno@gmail.com', 9145459875, 'mumbai'),
+    ->     (9, 'Abhishek', 'Dhar', 1, 'Assistant Professor', 50000, '1997-12-08', 'zyx@gmail.com', 9164659875, 'mumbai'),
+    ->     (10, 'Danish', 'Bhat', 1, 'Professor', 15000, '2015-01-01', 'pqr@gmail.com', 9149654875, 'pune');
+Query OK, 10 rows affected (0.15 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO works
+    ->     (prof_id, dept_id, duration)
+    -> VALUES
+    ->     (1, 1, 5),
+    ->     (2, 2, 4),
+    ->     (3, 3, 4),
+    ->     (4, 1, 5),
+    ->     (5, 2, 4),
+    ->     (6, 3, 20),
+    ->     (7, 2, 4),
+    ->     (8, 3, 5),
+    ->     (9, 1, 23),
+    ->     (10, 2, 5);
+Query OK, 10 rows affected (0.14 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Shift
+    ->     (prof_id,shift,working_hours)
+    -> VALUES
+    ->     (1, 'Morning', 8),
+    ->     (2, 'Evening', 8),
+    ->     (3, 'Morning', 7),
+    ->     (4, 'Evening', 8),
+    ->     (5, 'Morning', 6),
+    ->     (6, 'Evening', 9),
+    ->     (7, 'Morning', 8),
+    ->     (8, 'Evening',10),
+    ->     (9, 'Morning', 8),
+    ->     (10,'Evening', 8);
+Query OK, 10 rows affected (0.09 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Professors where ((city='pune'or city='mumbai') and (prof_fname like 'a%' or prof_fname like 'd%'));
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email         | phone      | city   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+|       8 | Ayush      | Raina      |       1 | Professor           |  18000 | 2015-01-01 | mno@gmail.com | 9145459875 | mumbai |
+|       9 | Abhishek   | Dhar       |       1 | Assistant Professor |  50000 | 1997-12-08 | zyx@gmail.com | 9164659875 | mumbai |
+|      10 | Danish     | Bhat       |       1 | Professor           |  15000 | 2015-01-01 | pqr@gmail.com | 9149654875 | pune   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> Select count(distinct city) from Professors;
++----------------------+
+| count(distinct city) |
++----------------------+
+|                    3 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Professors
+    -> set salary = (1.05)*salary
+    -> where doj='2015-01-01';
+Query OK, 4 rows affected (0.13 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from Professors;
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email         | phone      | city   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+|       1 | Binod      | binod      |       1 | Professor           |  26250 | 2015-01-01 | abc@gmail.com | 9149589875 | jammu  |
+|       2 | Sahil      | Singh      |       2 | Assistant Professor |  30000 | 2016-01-01 | xyz@gmail.com | 9149656875 | pune   |
+|       3 | Sanchit    | Raina      |       1 | Professor           |  19000 | 2016-01-01 | def@gmail.com | 9149459875 | mumbai |
+|       4 | Rajwinder  | Singh      |       1 | Professor           |  36750 | 2015-01-01 | stu@gmail.com | 9154659875 | mumbai |
+|       5 | Tejas      | Sarawade   |       1 | Professor           |  20000 | 2016-01-01 | jkl@gmail.com | 9144579875 | pune   |
+|       6 | Sam        | Jagdale    |       1 | Assistant Professor |  40000 | 1999-12-26 | ghi@gmail.com | 9145759875 | pune   |
+|       7 | Pradyumna  | Rajje      |       1 | Assistant Professor |   9000 | 2016-01-01 | vwx@gmail.com | 9197569875 | mumbai |
+|       8 | Ayush      | Raina      |       1 | Professor           |  18900 | 2015-01-01 | mno@gmail.com | 9145459875 | mumbai |
+|       9 | Abhishek   | Dhar       |       1 | Assistant Professor |  50000 | 1997-12-08 | zyx@gmail.com | 9164659875 | mumbai |
+|      10 | Danish     | Bhat       |       1 | Professor           |  15750 | 2015-01-01 | pqr@gmail.com | 9149654875 | pune   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+10 rows in set (0.00 sec)
+
+mysql> Delete from Professors
+    -> where city='pune';
+Query OK, 4 rows affected (0.13 sec)
+
+mysql> select * from Professors;
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email         | phone      | city   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+|       1 | Binod      | binod      |       1 | Professor           |  26250 | 2015-01-01 | abc@gmail.com | 9149589875 | jammu  |
+|       3 | Sanchit    | Raina      |       1 | Professor           |  19000 | 2016-01-01 | def@gmail.com | 9149459875 | mumbai |
+|       4 | Rajwinder  | Singh      |       1 | Professor           |  36750 | 2015-01-01 | stu@gmail.com | 9154659875 | mumbai |
+|       7 | Pradyumna  | Rajje      |       1 | Assistant Professor |   9000 | 2016-01-01 | vwx@gmail.com | 9197569875 | mumbai |
+|       8 | Ayush      | Raina      |       1 | Professor           |  18900 | 2015-01-01 | mno@gmail.com | 9145459875 | mumbai |
+|       9 | Abhishek   | Dhar       |       1 | Assistant Professor |  50000 | 1997-12-08 | zyx@gmail.com | 9164659875 | mumbai |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT prof_fname,prof_lname from Professors
+    -> where city='pune' or city='mumbai';
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Sanchit    | Raina      |
+| Rajwinder  | Singh      |
+| Pradyumna  | Rajje      |
+| Ayush      | Raina      |
+| Abhishek   | Dhar       |
++------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * from Professors
+    -> where doj='2015-01-01' or doj='2015-01-01';
++---------+------------+------------+---------+-------------+--------+------------+---------------+------------+--------+
+| prof_id | prof_fname | prof_lname | dept_id | designation | salary | doj        | email         | phone      | city   |
++---------+------------+------------+---------+-------------+--------+------------+---------------+------------+--------+
+|       1 | Binod      | binod      |       1 | Professor   |  26250 | 2015-01-01 | abc@gmail.com | 9149589875 | jammu  |
+|       4 | Rajwinder  | Singh      |       1 | Professor   |  36750 | 2015-01-01 | stu@gmail.com | 9154659875 | mumbai |
+|       8 | Ayush      | Raina      |       1 | Professor   |  18900 | 2015-01-01 | mno@gmail.com | 9145459875 | mumbai |
++---------+------------+------------+---------+-------------+--------+------------+---------------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT prof_fname, prof_lname, dept_id 
+    -> from Professors
+    -> where salary IN ('30000', '40000', '50000');
++------------+------------+---------+
+| prof_fname | prof_lname | dept_id |
++------------+------------+---------+
+| Abhishek   | Dhar       |       1 |
++------------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT prof_fname, prof_lname, salary, doj
+    -> from Professors
+    -> order by salary desc; 
++------------+------------+--------+------------+
+| prof_fname | prof_lname | salary | doj        |
++------------+------------+--------+------------+
+| Abhishek   | Dhar       |  50000 | 1997-12-08 |
+| Rajwinder  | Singh      |  36750 | 2015-01-01 |
+| Binod      | binod      |  26250 | 2015-01-01 |
+| Sanchit    | Raina      |  19000 | 2016-01-01 |
+| Ayush      | Raina      |  18900 | 2015-01-01 |
+| Pradyumna  | Rajje      |   9000 | 2016-01-01 |
++------------+------------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select prof_fname,prof_lname
+    -> from Professors
+    -> where salary >= 10000 and salary <= 20000;
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Sanchit    | Raina      |
+| Ayush      | Raina      |
++------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select prof_fname,prof_lname 
+    -> from Professors 
+    -> where salary IN(select max(sal) from professor);
+ERROR 1146 (42S02): Table '31155.professor' doesn't exist
+mysql> select prof_fname,prof_lname 
+    -> from Professors 
+    -> where salary IN(select max(sal) from Professor);
+ERROR 1146 (42S02): Table '31155.Professor' doesn't exist
+mysql> select prof_fname,prof_lname  from Professors  where salary IN(select max(sal) from Professors);
+ERROR 1054 (42S22): Unknown column 'sal' in 'field list'
+mysql> select prof_fname,prof_lname 
+    -> from Professors 
+    -> where salary IN(select max(salary) from Professors);
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Abhishek   | Dhar       |
++------------+------------+
+1 row in set (0.00 sec)

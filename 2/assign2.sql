@@ -17,7 +17,7 @@ CREATE TABLE Professors
     prof_fname varchar(16) NOT NULL,
     prof_lname varchar(16) NOT NULL,
     dept_id int NOT NULL,
-    designation varchar(16) NOT NULL,
+    designation varchar(32) NOT NULL,
     salary int NOT NULL,
     doj DATE NOT NULL,
     email varchar(32) NOT NULL,
