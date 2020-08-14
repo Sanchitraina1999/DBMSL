@@ -84,11 +84,7 @@ where doj='2015-01-01' or doj='2015-01-01';
 
 select prof_fname,prof_lname 
 from Professors 
-where salary IN(select max(salary) from Professors);
-
-select prof_fname,prof_lname
-from Professors
-where salary >= 10000 and salary <= 20000;
+where salary IN(select max(salary) from Professors where salary>=10000 and salary<=20000);
 
 -- 9. Display all professors name with salary and date of joining with decreasing order of salary.
 
