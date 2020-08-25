@@ -1,0 +1,50 @@
+sanchit199@imsotired:~$ sudo mysql
+[sudo] password for sanchit199: 
+Sorry, try again.
+[sudo] password for sanchit199: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.21-0ubuntu0.20.04.4 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 31155              |
+| college            |
+| information_schema |
+| mydb               |
+| mysql              |
+| performance_schema |
+| second31155        |
+| sys                |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> USE second31155;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> CREATE VIEW prof_pune_mumbai_a_d AS
+    -> SELECT * FROM Professors
+    -> WHERE ((city='pune' or city='mumbai') and (prof_fname like 'a%' or prof_fname like 'd%'));
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> SELECT * FROM prof_pune_mumbai_a_d;
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+| prof_id | prof_fname | prof_lname | dept_id | designation         | salary | doj        | email         | phone      | city   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+|       8 | Ayush      | Raina      |       3 | Professor           |  18000 | 2015-01-01 | mno@gmail.com | 9145459875 | mumbai |
+|       9 | Abhishek   | Dhar       |       1 | Assistant Professor |  50000 | 1997-12-08 | zyx@gmail.com | 9164659875 | mumbai |
+|      10 | Danish     | Bhat       |       2 | Professor           |  15000 | 2015-01-01 | pqr@gmail.com | 9149654875 | pune   |
++---------+------------+------------+---------+---------------------+--------+------------+---------------+------------+--------+
+3 rows in set (0.00 sec)

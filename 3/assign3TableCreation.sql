@@ -93,7 +93,7 @@ from Shift;
 -- in another table, it is also updated/deleted in the child tables
 
 -- WE CAN ONLY DELETE OR UPDATE columns that are foreign keys
--- in PARENT KEYS, not in CHILD tables;
+-- in PARENT tables, not in CHILD tables;
 
 -- Examples ->
 

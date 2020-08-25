@@ -302,3 +302,12 @@ mysql> select prof_fname,prof_lname
 | Abhishek   | Dhar       |
 +------------+------------+
 1 row in set (0.00 sec)
+mysql> select prof_fname,prof_lname 
+    -> from Professors 
+    -> where salary IN(select max(salary) from Professors where salary BETWEEN 10000 and 20000);
++------------+------------+
+| prof_fname | prof_lname |
++------------+------------+
+| Sanchit    | Raina      |
++------------+------------+
+1 row in set (0.11 sec)
