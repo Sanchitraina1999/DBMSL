@@ -36,9 +36,42 @@
     INNER JOIN Departments d on p.dept_id = d.dept_id 
     GROUP BY d.dept_name;
     
-  7. List the prof_id associated department and the dept_name having name ‘computer’;(subquery)     
-  8. Find the names of all departments where the professors joined in year 2015 (or date of joining is 1-1-2015).(subquery) 
-  9. Create view showing the professor and shift details. (COMPLEX VIEW) 
-  10. Perform Manipulation on simple view-Insert, update, delete, drop view.
+--   7. List the prof_id associated department and the dept_name having name ‘computer’;(subquery)     
+    SELECT prof_id, dept_id, dept_name
+    FROM Professors
+    Where dept_id IN (SELECT dept_id FROM Departments WHERE dept_name='computer');
 
- 
+--   8. Find the names of all departments where the professors joined in year 2015 (or date of joining is 1-1-2015).(subquery) 
+    SELECT dept_name
+    FROM Departments
+    WHERE dept_id IN (SELECT dept_id FROM Professors WHERE doj='2015-01-01');
+
+--   9. Create view showing the professor and shift details. (COMPLEX VIEW) 
+    CREATE VIEW view_prof
+    AS
+    SELECT p.prof_id,p.prof_fname,p.prof_lname,p.dept_id,p.designation,p.salary,p.doj,p.email,p.phone,p.city,s.shift,s.working_hours
+    FROM Professors p
+    INNER JOIN Shift s
+    ON p.prof_id = s.prof_id;
+
+    --use view as--
+    SELECT * FROM view_prof;
+
+--   10. Perform Manipulation on simple view-Insert, update, delete, drop view.
+    --CREATE SIMPLE VIEW
+        CREATE VIEW view_dept
+        AS
+        SELECT dept_id,dept_name
+        FROM Departments;
+    -- Insert view.
+            INSERT INTO view_dept
+            VALUES(
+                4, 'mechanical'
+            );
+    -- update view.
+            UPDATE view_dept
+            SET dept_name='Electrical'
+            WHERE dept_id=4;
+
+    -- drop view.
+            DROP VIEW view_dept;
