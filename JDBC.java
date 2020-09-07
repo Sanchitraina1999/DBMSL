@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class JDBC {
 	public static void main(String[] args) throws Exception {
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/second31155","root","root");
 		
 		

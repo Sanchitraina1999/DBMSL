@@ -1,0 +1,41 @@
+/* Creating Customer Table */
+CREATE TABLE customer(
+    Cust_id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30),
+    total_purchase INT,
+    PRIMARY KEY (Cust_id)
+    );
+Query OK, 0 rows affected (2.35 sec)
+
+
+mysql> desc customer;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| Cust_id        | int         | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(30) | YES  |     | NULL    |                |
+| total_purchase | int         | YES  |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.13 sec)
+
+
+/*  Creating Category Table  */
+
+
+mysql> CREATE TABLE Category(
+    Cust_id INT NOT NULL,
+    Name VARCHAR(30),
+    Class VARCHAR(30),
+    FOREIGN KEY (Cust_id) REFERENCES customer(Cust_id)
+    );
+Query OK, 0 rows affected (0.92 sec)
+
+mysql> desc Category;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | int         | NO   | MUL | NULL    |       |
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Class   | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
