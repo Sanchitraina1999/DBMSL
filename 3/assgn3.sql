@@ -52,7 +52,12 @@ VALUES
 -- 2. Display all professors details with city pune and mumbai and professor first name starting with
 -- 'a' or 'd'.
 
-SELECT * FROM Professors where ((city='pune' or city='mumbai') and (prof_fname like 'a%' or prof_fname like 'd%'));
+SELECT * FROM Professors
+where (
+    (city='pune' or city='mumbai') 
+    and 
+    (prof_fname like 'a%' or prof_fname like 'd%')
+    );
 
 -- 3. list the number of different cities of professors.(use of distinct)
 
@@ -84,7 +89,12 @@ where doj='2015-01-01' or doj='2015-01-01';
 
 select prof_fname,prof_lname 
 from Professors 
-where salary IN(select max(salary) from Professors where salary BETWEEN 10000 and 20000);
+where salary 
+IN(select max(salary) 
+    from Professors 
+    where salary 
+    BETWEEN 10000 and 20000
+);
 
 -- 9. Display all professors name with salary and date of joining with decreasing order of salary.
 

@@ -1,41 +1,43 @@
-/* Creating Customer Table */
-CREATE TABLE customer(
-    Cust_id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(30),
-    total_purchase INT,
-    PRIMARY KEY (Cust_id)
-    );
-Query OK, 0 rows affected (2.35 sec)
+DELIMITER $$
 
+CREATE FUNCTION func_grade(Cust_id INT, total_price INT)
+    RETURNS VARCHAR(100)
+    DETERMINISTIC
+    BEGIN
+        DECLARE Class VARCHAR(32);
+        IF total_price BETWEEN 10000 AND 20000 THEN
+            SET Class = "Platinum";
+        ELSEIF total_price BETWEEN 5000 AND 9999 THEN
+            SET Class = "Gold";
+        ELSEIF total_price BETWEEN 2000 AND 4999 THEN
+            SET Class = "Silver";
+        END IF;
+        RETURN Class;
+    END 
+    $$
 
-mysql> desc customer;
-+----------------+-------------+------+-----+---------+----------------+
-| Field          | Type        | Null | Key | Default | Extra          |
-+----------------+-------------+------+-----+---------+----------------+
-| Cust_id        | int         | NO   | PRI | NULL    | auto_increment |
-| name           | varchar(30) | YES  |     | NULL    |                |
-| total_purchase | int         | YES  |     | NULL    |                |
-+----------------+-------------+------+-----+---------+----------------+
-3 rows in set (0.13 sec)
+mysql> SELECT * FROM customer;
++---------+--------+----------------+
+| Cust_id | name   | total_purchase |
++---------+--------+----------------+
+|       1 | Will   |           2000 |
+|       2 | John   |           5000 |
+|       3 | Smith  |           4999 |
+|       4 | James  |           9989 |
+|       5 | Harry  |          15000 |
+|       6 | Donald |          10000 |
++---------+--------+----------------+
+6 rows in set (0.00 sec)
 
+mysql> DELIMITER ;
 
-/*  Creating Category Table  */
+mysql> INSERT INTO Customer VALUES (7,"New",5200);
+Query OK, 1 row affected (0.01 sec)
 
-
-mysql> CREATE TABLE Category(
-    Cust_id INT NOT NULL,
-    Name VARCHAR(30),
-    Class VARCHAR(30),
-    FOREIGN KEY (Cust_id) REFERENCES customer(Cust_id)
-    );
-Query OK, 0 rows affected (0.92 sec)
-
-mysql> desc Category;
-+---------+-------------+------+-----+---------+-------+
-| Field   | Type        | Null | Key | Default | Extra |
-+---------+-------------+------+-----+---------+-------+
-| Cust_id | int         | NO   | MUL | NULL    |       |
-| Name    | varchar(30) | YES  |     | NULL    |       |
-| Class   | varchar(30) | YES  |     | NULL    |       |
-+---------+-------------+------+-----+---------+-------+
-3 rows in set (0.01 sec)
+mysql> SELECT func_grade(7,5200);
++--------------------+
+| func_grade(7,5200) |
++--------------------+
+| Gold               |
++--------------------+
+1 row in set (0.01 sec)

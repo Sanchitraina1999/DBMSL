@@ -39,7 +39,13 @@
 --   7. List the prof_id associated department and the dept_name having name ‘computer’;(subquery)     
     SELECT prof_id, dept_id, dept_name
     FROM Professors
-    Where dept_id IN (SELECT dept_id FROM Departments WHERE dept_name='computer');
+    Where dept_id 
+    IN 
+    (
+        SELECT dept_id 
+        FROM Departments 
+        WHERE dept_name='computer'
+    );
 
 --   8. Find the names of all departments where the professors joined in year 2015 (or date of joining is 1-1-2015).(subquery) 
     SELECT dept_name
@@ -63,15 +69,14 @@
         AS
         SELECT dept_id,dept_name
         FROM Departments;
-    -- Insert view.
-            INSERT INTO view_dept
-            VALUES(
-                4, 'mechanical'
-            );
-    -- update view.
-            UPDATE view_dept
-            SET dept_name='Electrical'
-            WHERE dept_id=4;
 
-    -- drop view.
-            DROP VIEW view_dept;
+        INSERT INTO view_dept
+        VALUES(
+            4, 'mechanical'
+        );
+        
+        UPDATE view_dept
+        SET dept_name='Electrical'
+        WHERE dept_id=4;
+
+        DROP VIEW view_dept;
