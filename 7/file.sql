@@ -160,3 +160,67 @@ mysql> create procedure proc_grade_with_id_as_in(in ID int)
 mysql> delimiter ;
 mysql> call proc_grade();
 
+sanchit199@imsotired:~$ sudo mysql
+[sudo] password for sanchit199: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.21 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| 31155              |
+| college            |
+| fourth_31155       |
+| information_schema |
+| mydb               |
+| mysql              |
+| performance_schema |
+| second31155        |
+| seventh31155       |
+| sys                |
+| third31155         |
+| third_31155        |
++--------------------+
+12 rows in set (0.01 sec)
+
+mysql> use seventh31155;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> DELIMITER $$
+mysql> CREATE FUNCTION func_grade(Cust_id INT, total_price INT)
+    ->     RETURNS VARCHAR(32)
+    ->     DETERMINISTIC
+    ->     BEGIN
+    ->         DECLARE Class VARCHAR(32);
+    ->         IF total_price BETWEEN 10000 AND 20000 THEN
+    ->             SET Class = "Platinum";
+    ->         ELSEIF total_price BETWEEN 5000 AND 9999 THEN
+    ->             SET Class = "Gold";
+    ->         ELSEIF total_price BETWEEN 2000 AND 4999 THEN
+    ->             SET Class = "Silver";
+    ->         END IF;
+    ->         RETURN Class;
+    ->     END 
+    ->     $$
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> DELIMITER ;
+mysql> SELECT func_grade(12,10000);
++----------------------+
+| func_grade(12,10000) |
++----------------------+
+| Platinum             |
++----------------------+
+1 row in set (0.00 sec)
