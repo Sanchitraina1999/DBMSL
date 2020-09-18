@@ -16,6 +16,14 @@ create table fine(
     foreign key(Rollin) references Borrower(Rollin) on delete cascade on update cascade
 );
 
+insert into Borrower
+    (Rollin, Name, DateofIssue, NameofBook)
+VALUES
+    (1,'sanchit','2020-08-06','junglebook'),
+    (2,'ayush','2020-09-11','junglybook'),
+    (3,'abhishek','2020-08-05','science'),
+    (4,'akash','2020-08-04','maths');
+
 delimiter $$
 
 create procedure calfine(in cid int)
