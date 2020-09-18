@@ -16,7 +16,7 @@ create table fine(
     foreign key(Rollin) references Borrower(Rollin) on delete cascade on update cascade
 );
 
- delimiter $$
+delimiter $$
 
 create procedure calfine(in cid int)
     begin
