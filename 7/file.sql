@@ -74,15 +74,15 @@ mysql> create procedure proc_grade()
     ->      repeat
     ->      fetch cursor_c1 into id,name,total;
     ->      if not b then
-    ->      if total>=10000 and total<=20000 then
-    ->      insert into Category values(id,name,'Platinum');
-    ->      end if;
-    ->      if total>=5000 and total<=9999 then
-    ->      insert into Category values(id,name,'Gold');
-    ->      end if;
-    ->      if total>=2000 and total<=4999 then
-    ->      insert into Category values(id,name,'Silver');
-    ->      end if;
+    ->          if total>=10000 and total<=20000 then
+    ->              insert into Category values(id,name,'Platinum');
+    ->          end if;
+    ->          if total>=5000 and total<=9999 then
+    ->              insert into Category values(id,name,'Gold');
+    ->          end if;
+    ->          if total>=2000 and total<=4999 then
+    ->              insert into Category values(id,name,'Silver');
+    ->          end if;
     ->      end if;
     ->      until b end repeat;
     -> end;
@@ -156,7 +156,7 @@ mysql> create procedure proc_grade_with_id_as_in(in ID int)
     ->          end if;
     ->      end if;
     ->      until b end repeat;
-    -> end;cust_id
+    -> end;
 mysql> delimiter ;
 mysql> call proc_grade();
 

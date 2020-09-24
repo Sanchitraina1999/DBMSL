@@ -1,4 +1,4 @@
-A7 
+A7
 1. Need to use stored procedure supported by MySQL with and without
  parameters(IN,OUT,INOUT) 
  2. Function with and without parameter for the same problem 
