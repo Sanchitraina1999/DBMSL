@@ -1,5 +1,7 @@
 create database fifth31155;
 
+use fifth31155;
+
 create table Borrower(
     Rollin int not null,
     Name varchar(25) not null,
@@ -29,13 +31,25 @@ delimiter $$
 create procedure calfine(in cid int)
     begin
         declare p_date date;
+        declare f int;
+        declare diff int;
+
+        declare 
+    end;
+
+create procedure calfine(in cid int)
+    begin
+        declare p_date date;
         declare f_amt int;
         declare diff int;
 
         declare exit handler for sqlexception select 'Table not found';
+        declare exit handler for 1062 select 'duplicate error' as message;
+        declare exit handler for not found select 'record not found' as message;
+
         select DateofIssue into p_date from Borrower where Rollin=cid;
         select datediff(curdate(), p_date) into diff;
-
+         
         if (diff>=15 and diff<=30) then
             set f_amt=diff*5;
             insert into fine values (cid,CURDATE(),f_amt);
