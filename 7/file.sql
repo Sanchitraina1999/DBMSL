@@ -133,30 +133,31 @@ mysql> ^DBye
 
 
 delimiter $$
-mysql> create procedure proc_grade_with_id_as_in(in ID int)
-    -> begin
-    ->      declare name varchar(30);
-    ->      declare b int default 0;
-    ->      declare id int;
-    ->      declare total int;
-    ->      declare cursor_c1 cursor for select * from Customer where id=ID;
-    ->      declare continue handler for not found set b=1;
-    ->      open cursor_c1;
-    ->      repeat
-    ->      fetch cursor_c1 into id,name,total;
-    ->      if not b then
-    ->          if total>=10000 and total<=20000 then
-    ->              insert into Category values(id,name,'Platinum');
-    ->          end if;
-    ->          if total>=5000 and total<=9999 then
-    ->              insert into Category values(id,name,'Gold');
-    ->          end if;
-    ->          if total>=2000 and total<=4999 then
-    ->              insert into Category values(id,name,'Silver');
-    ->          end if;
-    ->      end if;
-    ->      until b end repeat;
-    -> end;
+create procedure proc_grade_with_id_as_in(in ID int)
+    begin
+        declare name varchar(30);
+        declare b int default 0;
+        declare id int;
+        declare total int;
+        declare cursor_c1 cursor for select * from Customer where id=ID;
+        declare continue handler for not found set b=1;
+        open cursor_c1;
+        repeat
+        fetch cursor_c1 into id,name,total;
+        if not b then
+            if total>=10000 and total<=20000 then
+                insert into Category values(id,name,'Platinum');
+            end if;
+            if total>=5000 and total<=9999 then
+                insert into Category values(id,name,'Gold');
+            end if;
+            if total>=2000 and total<=4999 then
+                insert into Category values(id,name,'Silver');
+            end if;
+        end if;
+        until b end repeat;
+    end;
+    $$
 mysql> delimiter ;
 mysql> call proc_grade();
 
