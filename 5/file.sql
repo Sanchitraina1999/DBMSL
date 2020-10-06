@@ -52,10 +52,10 @@ create procedure calfine(in cid int)
          
         if (diff>=15 and diff<=30) then
             set f_amt=diff*5;
-            insert into fine values (cid,CURDATE(),f_amt);
+            insert into fine values (cid,curdate(),f_amt);
         elseif (diff>30) then
             set f_amt=diff*50;
-            insert into fine values (cid,CURDATE(),f_amt);
+            insert into fine values (cid,curdate(),f_amt);
         end if;
         update Borrower set Status='P' where Rollin=cid;
     end;
