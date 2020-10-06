@@ -199,22 +199,22 @@ Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
 
 Database changed
-mysql> DELIMITER $$
-mysql> CREATE FUNCTION func_grade(Cust_id INT, total_price INT)
-    ->     RETURNS VARCHAR(32)
-    ->     DETERMINISTIC
-    ->     BEGIN
-    ->         DECLARE Class VARCHAR(32);
-    ->         IF total_price BETWEEN 10000 AND 20000 THEN
-    ->             SET Class = "Platinum";
-    ->         ELSEIF total_price BETWEEN 5000 AND 9999 THEN
-    ->             SET Class = "Gold";
-    ->         ELSEIF total_price BETWEEN 2000 AND 4999 THEN
-    ->             SET Class = "Silver";
-    ->         END IF;
-    ->         RETURN Class;
-    ->     END 
-    ->     $$
+ DELIMITER $$
+ CREATE FUNCTION func_grade(Cust_id INT, total_price INT)
+     RETURNS VARCHAR(32)
+     DETERMINISTIC
+     BEGIN
+         DECLARE Class VARCHAR(32);
+         IF total_price BETWEEN 10000 AND 20000 THEN
+             SET Class = "Platinum";
+         ELSEIF total_price BETWEEN 5000 AND 9999 THEN
+             SET Class = "Gold";
+         ELSEIF total_price BETWEEN 2000 AND 4999 THEN
+             SET Class = "Silver";
+         END IF;
+         RETURN Class;
+     END 
+     $$
 Query OK, 0 rows affected (0.11 sec)
 
 mysql> DELIMITER ;
