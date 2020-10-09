@@ -10,8 +10,8 @@ CREATE TABLE Student
     DateofAdmission DATE NOT NULL,
     branch VARCHAR(16) NOT NULL,
     percent DOUBLE NOT NULL,
-    Status varchar(1) NOT NULL,
-    PRIMARY KEY(Rollno)
+    Status varchar(16) NOT NULL,
+    PRIMARY KEY (Rollno)
 );
 
 CREATE TABLE Alumni
@@ -21,8 +21,8 @@ CREATE TABLE Alumni
     DateofAdmission DATE NOT NULL,
     branch VARCHAR(16) NOT NULL,
     percent DOUBLE NOT NULL,
-    Status varchar(1) NOT NULL,
-    PRIMARY KEY(Rollno)
+    Status varchar(16) NOT NULL,
+    PRIMARY KEY (Rollno)
 );
 
 //Status = 'c' -> current
@@ -41,3 +41,17 @@ VALUES
     (8, 'Sankit','1994-04-28','ENTC',87.2,'c'),
     (9, 'Shivam','1992-03-18','ENTC',92.3,'c'),
     (10, 'Sativa','2001-02-19','ENTC',91.4,'c');
+
+CREATE TRIGGER T1 
+AFTER DELETE ON Student
+FOR EACH ROW
+INSERT INTO Alumni 
+VALUES
+(OLD.Rollno, OLD.Name,OLD.DateofAdmission,OLD.branch,OLD.percent,"alumni");
+
+CREATE TRIGGER T2
+AFTER UPDATE ON Student
+FOR EACH ROW
+INSERT INTO Alumni
+VALUES 
+(OLD.Rollno, OLD.Name,OLD.DateofAdmission,OLD.branch,OLD.percent,"alumni");
