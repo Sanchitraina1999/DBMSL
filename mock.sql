@@ -108,11 +108,18 @@ SELECT * FROM EMP_SALARY1;
 -- 3 Display records of employess working  in smith's 
 -- dept using EMP_Details relation. 
 
+SELECT *
+FROM Emp_Details
+where DEPTNO = (
+    SELECT DEPTNO
+    FROM Emp_Details
+    WHERE ENAME = 'SMITH'
+);
 
 -- 4.Display salary of employee whose salary is more than 
 -- salary of FORD using EMP_Details relation. 
 
-SELECT SAL
+SELECT ENAME,SAL
 FROM Emp_Details
 where SAL > (
     SELECT salary
@@ -122,11 +129,29 @@ where SAL > (
 
 -- 5.Display records of employee who are senior to JONES 
 -- using Emp_Details relation. 
+SELECT *
+FROM Emp_Details
+WHERE HIREDATE>(
+    SELECT HIREDATE
+    FROM Emp_Details
+    WHERE ENAME = 'JONES'
+);
 
 -- 6.Create view  Emp_View on Emp relation 
 -- contaianing Emp_name and City. 
 
+CREATE VIEW Emp_View
+AS
+SELECT emp_name, city,EmpId
+from Emp;
+
 -- 7.Update city in Emp_View 
--- whose EmpId id 10. 
+-- whose EmpId is 10. 
+
+UPDATE Emp_View
+SET City='Jaipur'
+where EmpId = 10;
 
 -- 8.Display view Emp_View. 
+
+select * from Emp_View;
