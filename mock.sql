@@ -13,8 +13,7 @@ CREATE TABLE Emp_salary(
     Emp_name VARCHAR(16) NOT NULL,
     Deptname VARCHAR(16) NOT NULL,
     Salary INT NOT NULL,
-    PRIMARY KEY (Salary),
-    FOREIGN KEY (Emp_name) REFERENCES Emp(Emp_name) ON DELETE CASCADE
+    FOREIGN KEY (Emp_name) REFERENCES Emp(Emp_name) ON DELETE CASCADE 
 );
 
 CREATE TABLE Emp_Details(
@@ -24,9 +23,7 @@ CREATE TABLE Emp_Details(
     HIREDATE DATE NOT NULL,
     SAL INT NOT NULL,
     DEPTNO INT NOT NULL,
-    FOREIGN KEY (EMPNO) REFERENCES Emp(EmpId) ON DELETE CASCADE,
-    FOREIGN KEY (ENAME) REFERENCES Emp(Emp_name) ON DELETE CASCADE,
-    FOREIGN KEY (SAL) REFERENCES Emp_salary(Salary) ON DELETE CASCADE
+    FOREIGN KEY (ENAME) REFERENCES Emp(Emp_name) ON DELETE CASCADE 
 );
 
 INSERT INTO Emp
@@ -44,43 +41,76 @@ VALUES
     ('Vansh','Srinagar',10);
  
 INSERT INTO Emp_salary
-    (EMPNO,Emp_name,Deptname,Salary)
+    (Emp_name,Deptname,Salary)
 VALUES
-    (1,'Sanchit','IT',15000),
-    (2,'Ayush','ADMIN',10000),
-    (3,'Abhishek','SECURITY',12000),
-    (4,'JONES','SERVICE',15999),
-    (5,'Ayushi','IT',12000),
-    (6,'FORD','SERVICE',9000),
-    (7,'SMITH','ADMIN',25000),
-    (8,'Kabir','IT',23000),
-    (9,'Kalpit','SERVICE',24000),
-    (10,'Vansh','SECURITY',14000);
+    ('Sanchit','IT',15000),
+    ('Ayush','ADMIN',10000),
+    ('Abhishek','SECURITY',12000),
+    ('JONES','SERVICE',15999),
+    ('Ayushi','IT',12000),
+    ('FORD','SERVICE',9000),
+    ('SMITH','ADMIN',25000),
+    ('Kabir','IT',23000),
+    ('Kalpit','SERVICE',24000),
+    ('Vansh','SECURITY',14000);
 
 INSERT INTO Emp_Details
-    (ENAME,JOB,HIREDATE,SAL,DEPTNO)
+    (EMPNO,ENAME,JOB,HIREDATE,SAL,DEPTNO)
 VALUES
-    ('Sanchit','Jammu','1999-12-08',15000,1),
-    ('Ayush','Pune','1999-10-14',15000,2),
-    ('Abhishek','Delhi','2001-12-13',15000,3),
-    ('JONES','Mumbai','2002-12-12',15000,4),
-    ('Ayushi','Nagpur','2003-12-18',15000,1),
-    ('FORD','Ambala','2004-04-18',15000,4),
-    ('SMITH','Badharwah','1997-11-28',15000,2),
-    ('Kabir','Poonch','2006-01-30',15000,1),
-    ('Kalpit','Rajouri','1999-02-28',15000,4),
-    ('Vansh','Srinagar','1996-06-18',15000,3);
+    (1,'Sanchit','Jammu','1999-12-08',15000,1),
+    (2,'Ayush','Pune','1999-10-14',10000,2),
+    (3,'Abhishek','Delhi','2001-12-13',12000,3),
+    (4,'JONES','Mumbai','2002-12-12',15999,4),
+    (5,'Ayushi','Nagpur','2003-12-18',12000,1),
+    (6,'FORD','Ambala','2004-04-18',9000,4),
+    (7,'SMITH','Badharwah','1997-11-28',25000,2),
+    (8,'Kabir','Poonch','2006-01-30',23000,1),
+    (9,'Kalpit','Rajouri','1999-02-28',24000,4),
+    (10,'Vansh','Srinagar','1996-06-18',14000,3);
  
 
-1.List the employee details along with Deptname and salary ,
-city using left outer join & right outer  
-join and inner Join. In Emp and Emp_salary relation. 
+ select * from Emp;
 
-2.Create view  EMP_SALARY1 on Emp_salary table  containing
- Emp_name,Deptname. 
+ select * from Emp_salary;
 
-3 Display records of employess working  in smith's 
-dept using EMP_Details relation. 
+ select * from Emp_Details;
+
+-- 1.List the employee details along with Deptname and salary ,
+-- city using left outer join & right outer  
+-- join and inner Join. In Emp and Emp_salary relation. 
+
+
+SELECT Emp_name,City,EmpId,Salary,Deptname
+FROM Emp
+LEFT JOIN Emp_salary
+using (Emp_name);
+
+SELECT Emp_name,City,EmpId,Salary,Deptname
+FROM Emp
+RIGHT JOIN Emp_salary
+using (Emp_name);
+
+SELECT Emp.Emp_name,City,EmpId,Salary,Deptname
+FROM Emp
+INNER JOIN Emp_salary
+ON Emp.Emp_name = Emp_salary.Emp_name;
+
+-- 2.Create view  EMP_SALARY1 on Emp_salary table  containing
+--  Emp_name,Deptname. 
+
+CREATE VIEW EMP_SALARY1
+AS
+SELECT Emp_name,Deptname
+FROM Emp_salary;
+
+SELECT * FROM EMP_SALARY1;
+
+-- 3 Display records of employess working  in smith's 
+-- dept using EMP_Details relation. 
+
+SELECT *
+FROM Emp
+where 
 
 4.Disply salary of employee whose salary is more than 
 salary of FORD using EMP_Details relation. 
