@@ -142,7 +142,7 @@ WHERE HIREDATE>(
 
 CREATE VIEW Emp_View
 AS
-SELECT emp_name, city,EmpId
+SELECT emp_name, city
 from Emp;
 
 -- 7.Update city in Emp_View 
@@ -150,7 +150,7 @@ from Emp;
 
 UPDATE Emp_View
 SET City='Jaipur'
-where EmpId = 10;
+where emp_name = 'Vansh';
 
 -- 8.Display view Emp_View. 
 
