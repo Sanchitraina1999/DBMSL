@@ -18,4 +18,4 @@ db.inventory.insertMany( [
 
  //FIND ALL ITEMS with uom as "cm":
 
- db.inventory.find({ "size.uom": "cm" }).pretty
+ db.inventory.find({ "size.uom": "cm" }).pretty()
