@@ -26,11 +26,15 @@ db.people.updateMany(
     { $set: { join_date: new Date() } }
 )
 
+db.people.find().pretty()
+
 // Drop join_date field
 db.people.updateMany(
     { },
     { $unset: { "join_date": "" } }
 )
+
+db.people.find().pretty()
 
 // Select id,userid and status
 db.people.find(
@@ -49,13 +53,18 @@ db.people.find(
         user_id: true,
         status: true
     }
-)
+).pretty()
 
 
 // Select where status is A
 db.people.find(
     { status: "A" }
 )
+
+db.people.find(
+    { status: "A" },
+    {_id: false,age: true}
+).pretty()
 
 // Select where status not equal to A
 db.people.find(
@@ -77,31 +86,31 @@ db.people.find(
 
 // Where age>25
 db.people.find(
-    { age: {$gt: 25} }    { age: { $gt: 25 } }        //Similarly replace gt with gte,lte,ne,lt
+    { age: {$gt: 25} }   //Similarly replace gt with gte,lte,ne,lt
 )
 
-Where userid like %bc%
+// Where userid like %bc%
 db.people.find( { user_id: /bc/ } )
 
-Where userid like bc%
+// Where userid like bc%
 db.people.find( { user_id: /^bc/ } )
 
-Where status A order by userid ascending
+// Where status A order by userid ascending
 db.people.find( { status: "A" } ).sort( { user_id: 1 } )
 
-Select count(*)
+// Select count(*)
 db.people.count()
 
-Select count(userid)
+// Select count(userid)
 db.people.count( { user_id: { $exists: true } } )
 
-Update people set status as C where age gt 25
+// Update people set status as C where age gt 25
 db.people.updateMany(
    { age: { $gt: 25 } },
    { $set: { status: "C" } }
 )
 
-To increment age by 3 where status A
+// To increment age by 3 where status A
 db.people.updateMany(
    { status: "A" } ,
    { $inc: { age: 3 } }
