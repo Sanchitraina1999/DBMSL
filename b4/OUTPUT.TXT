@@ -1,0 +1,195 @@
+imsotired@imsotired-Vostro-3578:~$ mongo
+MongoDB shell version v4.4.1
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("ce0e31b6-f595-4765-9cab-31544db96340") }
+MongoDB server version: 4.4.1
+---
+The server generated these startup warnings when booting: 
+        2020-11-03T09:37:00.048+05:30: ***** SERVER RESTARTED *****
+        2020-11-03T09:37:05.365+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2020-11-03T09:37:12.087+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use b4_31155;
+switched to db b4_31155
+> db.author.save({
+...     "book_title" : "MongoDB Tutorial", "author_name" : "aparajita",
+...     "status" : "active", "publish_year": "2016" 
+... });
+WriteResult({ "nInserted" : 1 })
+> db.author.save({
+...     "book_title" : "Software Testing Tutorial", "author_name" : "aparajita",
+...     "status" : "active", "publish_year": "2015" 
+... });
+WriteResult({ "nInserted" : 1 })
+> db.author.save({
+...     "book_title" : "Node.js Tutorial", "author_name" : "Kritika",
+...     "status" : "active", "publish_year": "2015" 
+... });
+WriteResult({ "nInserted" : 1 })
+> db.author.save({
+...     "book_title" : "PHP7 Tutorial", "author_name" : "aparajita",
+...     "status" : "passive", "publish_year": "2016" 
+... });
+WriteResult({ "nInserted" : 1 })
+> 
+> db.author.find().pretty();
+{
+	"_id" : ObjectId("5fa123c8dcb16a2fff39fff4"),
+	"book_title" : "MongoDB Tutorial",
+	"author_name" : "aparajita",
+	"status" : "active",
+	"publish_year" : "2016"
+}
+{
+	"_id" : ObjectId("5fa123c9dcb16a2fff39fff5"),
+	"book_title" : "Software Testing Tutorial",
+	"author_name" : "aparajita",
+	"status" : "active",
+	"publish_year" : "2015"
+}
+{
+	"_id" : ObjectId("5fa123c9dcb16a2fff39fff6"),
+	"book_title" : "Node.js Tutorial",
+	"author_name" : "Kritika",
+	"status" : "active",
+	"publish_year" : "2015"
+}
+{
+	"_id" : ObjectId("5fa123c9dcb16a2fff39fff7"),
+	"book_title" : "PHP7 Tutorial",
+	"author_name" : "aparajita",
+	"status" : "passive",
+	"publish_year" : "2016"
+}
+> db.author.mapReduce(
+...     function(){emit(this.author_name,1)},
+...     function(key,values){
+...         return Array.sum(values);
+...     },
+...     {
+...         query: {status: "active"}, out:"author_total"
+...     }
+... );
+{ "result" : "author_total", "ok" : 1 }
+> 
+> db.author_total.find().pretty();
+{ "_id" : "aparajita", "value" : 2 }
+{ "_id" : "Kritika", "value" : 1 }
+> db.stud.insert({ Name: "Amit", Marks:80 });
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({ Name: "Amit", Marks:90 });
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({ Name: "Shreya", Marks:40 });
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({ Name: "Neha", Marks:80 });
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({ Name: "Neha", Marks:35});
+WriteResult({ "nInserted" : 1 })
+> 
+> db.stud.find().pretty();
+{
+	"_id" : ObjectId("5fa123e2dcb16a2fff39fff8"),
+	"Name" : "Amit",
+	"Marks" : 80
+}
+{
+	"_id" : ObjectId("5fa123e2dcb16a2fff39fff9"),
+	"Name" : "Amit",
+	"Marks" : 90
+}
+{
+	"_id" : ObjectId("5fa123e2dcb16a2fff39fffa"),
+	"Name" : "Shreya",
+	"Marks" : 40
+}
+{
+	"_id" : ObjectId("5fa123e2dcb16a2fff39fffb"),
+	"Name" : "Neha",
+	"Marks" : 80
+}
+{
+	"_id" : ObjectId("5fa123e2dcb16a2fff39fffc"),
+	"Name" : "Neha",
+	"Marks" : 35
+}
+> 
+> db.stud.mapReduce(
+...     function(){emit(this.Name, 1)},
+...     function(key,values){
+...         return Array.sum(values);
+...     },
+...     {
+...         out: "Name_Total"
+...     }
+... );
+{ "result" : "Name_Total", "ok" : 1 }
+> 
+> db.Name_Total.find().pretty();
+{ "_id" : "Amit", "value" : 2 }
+{ "_id" : "Neha", "value" : 2 }
+{ "_id" : "Shreya", "value" : 1 }
+> 
+> db.stud.mapReduce(
+...     function(){ emit(this.Name,1)},
+...     function(key, values) {
+...     return Array.sum(values);
+...     },
+...     {
+...         out: "Name_Total"
+...     }
+... );
+{ "result" : "Name_Total", "ok" : 1 }
+> 
+> 
+> db.Name_Total.find().sort({_id: 1}).pretty();
+{ "_id" : "Amit", "value" : 2 }
+{ "_id" : "Neha", "value" : 2 }
+{ "_id" : "Shreya", "value" : 1 }
+> 
+> 
+> db.stud.mapReduce(
+...     function() { emit(this.Name,this.Marks)},
+...     function(key, values) {
+...         return Array.sum(values);
+...     },
+...     {
+...         out: "Total_Marks" 
+...     }
+... )
+{ "result" : "Total_Marks", "ok" : 1 }
+> 
+> db.Total_Marks.find().sort({_id: 1}).pretty();
+{ "_id" : "Amit", "value" : 170 }
+{ "_id" : "Neha", "value" : 115 }
+{ "_id" : "Shreya", "value" : 40 }
+> db.Total_Marks.find().sort({value: -1}).pretty();
+{ "_id" : "Amit", "value" : 170 }
+{ "_id" : "Neha", "value" : 115 }
+{ "_id" : "Shreya", "value" : 40 }
+> 
+> db.stud.mapReduce(
+...     function(){ emit(this.Name,1)},
+...     function(key, values) {
+...         return Array.sum(values);
+...     },
+...     {
+...         query:{Marks:{$gt:70}},out: 'Greater_than_70'
+...     }
+... );
+{ "result" : "Greater_than_70", "ok" : 1 }
+> 
+> db.Greater_than_70.find().pretty();
+{ "_id" : "Amit", "value" : 2 }
+{ "_id" : "Neha", "value" : 1 }
+> 
