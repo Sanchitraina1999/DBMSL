@@ -6,10 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/imsotired/Desktop/TE/dbmsl/mongo-java-driver-3.8.1.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/home/imsotired/Downloads/mongo-java-driver-3.11.2.jar"/>
+	<classpathentry kind="lib" path="/home/imsotired/Downloads/mongodb-driver-core-3.11.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

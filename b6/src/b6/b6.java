@@ -1,12 +1,11 @@
-import com.mongodb.client.MongoCollection; 
 import com.mongodb.client.MongoDatabase; 
-import org.bson.Document; 
 import com.mongodb.MongoClient; 
-import com.mongodb.MongoCredential;  
-public class selectingCollection { 
+import com.mongodb.MongoCredential;
+public class b6 { 
+
    
    public static void main( String args[] ) {  
-      
+
       // Creating a Mongo client 
       MongoClient mongo = new MongoClient( "localhost" , 27017 ); 
      
