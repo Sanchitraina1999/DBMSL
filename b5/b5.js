@@ -22,7 +22,7 @@ db.people.insert([
         status: "A",
         age: 50 
     }
-])
+]);
  
 // Add a join_date field
 db.people.updateMany(
