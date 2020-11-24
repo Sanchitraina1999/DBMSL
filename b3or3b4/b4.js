@@ -1,5 +1,6 @@
-use b4_31155;
+show dbs
 
+use b4_31155;
 
 
 //SYNTAX - mapReduce
