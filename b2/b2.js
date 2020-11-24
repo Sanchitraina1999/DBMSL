@@ -47,7 +47,7 @@ db.votes.update(
     {
         $set: {percent: 72}
     }    
-)
+);
 
 //update without upsert
 db.votes.update(
@@ -57,7 +57,7 @@ db.votes.update(
     {
         $set: {percent: 72}
     }
-)
+);
 
 //update with upsert
 db.votes.update(
@@ -70,15 +70,15 @@ db.votes.update(
     {
         upsert: true,
     }  
-)
+);
 
 // D - DELETE
 
 db.votes.remove({wardno: 5});
 
-db.votes.remove({percent: 43})
+db.votes.remove({percent: 43});
 
-db.votes.remove({})
+db.votes.remove({});
 
 
 // EMBEDDED DOCUMENTS
