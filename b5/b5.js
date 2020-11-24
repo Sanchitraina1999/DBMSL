@@ -1,3 +1,7 @@
+show dbs
+
+use people
+
 db.people.insert([
     {
         user_id: "abc123",
