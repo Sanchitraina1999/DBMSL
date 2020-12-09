@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/imsotired/Desktop/TE/dbmsl/MOCK2/mock2/**/*.jar"
+    ]
+}
