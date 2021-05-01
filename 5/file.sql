@@ -31,15 +31,6 @@ delimiter $$
 create procedure calfine(in cid int)
     begin
         declare p_date date;
-        declare f int;
-        declare diff int;
-
-        declare 
-    end;
-
-create procedure calfine(in cid int)
-    begin
-        declare p_date date;
         declare f_amt int;
         declare diff int;
 
